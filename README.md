@@ -18,7 +18,8 @@ this repo | pypi
 In order to tell Package Control
 that you are using the `requests` package
 in your ST package,
-create a `dependencies.json` file in your repo
+create a `dependencies.json` file
+in your package root
 with the following contents:
 
 ```js
