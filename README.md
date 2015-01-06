@@ -1,8 +1,8 @@
-# requests
+# *requests* module for Package Control
 [![Build Status](https://travis-ci.org/packagecontrol/requests.png?branch=master)](https://travis-ci.org/packagecontrol/requests)
 
 
-This is the [requests][] package
+This is the *[requests][]* module
 bundled for usage with [Package Control][],
 a package manager
 for the [Sublime Text][] text editor.
@@ -13,10 +13,10 @@ this repo | pypi
 ![latest tag](https://img.shields.io/github/tag/packagecontrol/requests.svg) | [![pypi](https://pypip.in/version/requests/badge.svg)][pypi]
 
 
-## How to use `requests` as a dependency
+## How to use *requests* as a dependency
 
 In order to tell Package Control
-that you are using the `requests` package
+that you are using the *requests* module
 in your ST package,
 create a `dependencies.json` file
 in your package root
@@ -37,12 +37,11 @@ add `"requests"` to the every dependency list.
 
 Then run the **Package Control: Satisfy Dependencies** command
 to make Package Control
-install the package for you locally
-if you don't have it already
-(or restart ST).
+install the module for you locally
+(if you don't have it already).
 
 See also:
-[documentation on dependencies](https://packagecontrol.io/docs/dependencies)
+[Documentation on Dependencies](https://packagecontrol.io/docs/dependencies)
 
 
 ## How to update this repository (for contributors)
@@ -59,14 +58,13 @@ See also:
 4. Commit changes
    and either create a pull request
    or create a tag directly
-   with the format `v<version>`.
-
-   Finally, don't forget to push.
+   in the format `v<version>` (in case you have push access).
 
 The reason why `loader.py` exists
 is because Package Control 3.0.0
 does not yet allow the same code base
-for both ST2 and ST3.
+for both ST2 and ST3
+(see wbond/package_control#818).
 
 
 ## License
