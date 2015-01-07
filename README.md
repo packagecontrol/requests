@@ -40,6 +40,10 @@ to make Package Control
 install the module for you locally
 (if you don't have it already).
 
+After all this
+you can use `import requests`
+in any of your Python plugins.
+
 See also:
 [Documentation on Dependencies](https://packagecontrol.io/docs/dependencies)
 
@@ -49,7 +53,7 @@ See also:
 1. Download the latest tarball
    from [pypi][].
 2. Delete everything inside the `all/` folder.
-3. Copy the `requests` folder,
+3. Copy the `requests/` folder,
    `test_requests.py`,
    `requirements.txt`
    and everything related to copyright/licensing
@@ -58,7 +62,8 @@ See also:
 4. Commit changes
    and either create a pull request
    or create a tag directly
-   in the format `v<version>` (in case you have push access).
+   in the format `v<version>`
+   (in case you have push access).
 
 The reason why `loader.py` exists
 is because Package Control 3.0.0
@@ -77,7 +82,7 @@ The contents of the `all/` folder
 fall under *their own bundled licenses*.
 
 
-[requests]: https://github.com/kennethreitz/requests
+[requests]: http://docs.python-requests.org/en/latest/
 [Package Control]: http://packagecontrol.io/
 [Sublime Text]: http://sublimetext.com/
 [pypi]: https://pypi.python.org/pypi/requests
