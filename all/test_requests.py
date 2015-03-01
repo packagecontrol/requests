@@ -301,13 +301,15 @@ class RequestsTestCase(unittest.TestCase):
         r = s.get(url)
         assert r.status_code == 200
 
-    def test_connection_error(self):
+    def test_connection_error_invalid_domain(self):
         """Connecting to an unknown domain should raise a ConnectionError"""
         with pytest.raises(ConnectionError):
-            requests.get("http://fooobarbangbazbing.httpbin.org")
+            requests.get("http://doesnotexist.google.com")
 
+    def test_connection_error_invalid_port(self):
+        """Connecting to an invalid port should raise a ConnectionError"""
         with pytest.raises(ConnectionError):
-            requests.get("http://httpbin.org:1")
+            requests.get("http://httpbin.org:1", timeout=1)
 
     def test_LocationParseError(self):
         """Inputing a URL that cannot be parsed should raise an InvalidURL error"""
@@ -1265,6 +1267,32 @@ class UtilsTestCase(unittest.TestCase):
             'http://localhost.localdomain:5000/v1.0/') == {}
         assert get_environ_proxies('http://www.requests.com/') != {}
 
+    def test_guess_filename_when_int(self):
+        from requests.utils import guess_filename
+        assert None is guess_filename(1)
+
+    def test_guess_filename_when_filename_is_an_int(self):
+        from requests.utils import guess_filename
+        fake = type('Fake', (object,), {'name': 1})()
+        assert None is guess_filename(fake)
+
+    def test_guess_filename_with_file_like_obj(self):
+        from requests.utils import guess_filename
+        from requests import compat
+        fake = type('Fake', (object,), {'name': b'value'})()
+        guessed_name = guess_filename(fake)
+        assert b'value' == guessed_name
+        assert isinstance(guessed_name, compat.bytes)
+
+    def test_guess_filename_with_unicode_name(self):
+        from requests.utils import guess_filename
+        from requests import compat
+        filename = b'value'.decode('utf-8')
+        fake = type('Fake', (object,), {'name': filename})()
+        guessed_name = guess_filename(fake)
+        assert filename == guessed_name
+        assert isinstance(guessed_name, compat.str)
+
     def test_is_ipv4_address(self):
         from requests.utils import is_ipv4_address
         assert is_ipv4_address('8.8.8.8')
@@ -1300,6 +1328,22 @@ class UtilsTestCase(unittest.TestCase):
         (username, password) = get_auth_from_url(url)
         assert username == percent_encoding_test_chars
         assert password == percent_encoding_test_chars
+
+    def test_requote_uri_with_unquoted_percents(self):
+        """Ensure we handle unquoted percent signs in redirects.
+
+        See: https://github.com/kennethreitz/requests/issues/2356
+        """
+        from requests.utils import requote_uri
+        bad_uri = 'http://example.com/fiz?buz=%ppicture'
+        quoted = 'http://example.com/fiz?buz=%25ppicture'
+        assert quoted == requote_uri(bad_uri)
+
+    def test_requote_uri_properly_requotes(self):
+        """Ensure requoting doesn't break expectations."""
+        from requests.utils import requote_uri
+        quoted = 'http://example.com/fiz?buz=%25ppicture'
+        assert quoted == requote_uri(quoted)
 
 
 class TestMorselToCookieExpires(unittest.TestCase):
