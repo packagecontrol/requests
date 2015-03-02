@@ -8,7 +8,7 @@ a package manager
 for the [Sublime Text][] text editor.
 
 
-this repo | pypi 
+this repo | pypi
 ---- | ----
 ![latest tag](https://img.shields.io/github/tag/packagecontrol/requests.svg) | [![pypi](https://img.shields.io/pypi/v/requests.svg)][pypi]
 
@@ -64,12 +64,6 @@ See also:
    or create a tag directly
    in the format `v<version>`
    (in case you have push access).
-
-The reason why `loader.py` exists
-is because Package Control 3.0.0
-does not yet allow the same code base
-for both ST2 and ST3
-(see wbond/package_control#818).
 
 
 ## License
