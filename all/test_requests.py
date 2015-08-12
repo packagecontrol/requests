@@ -935,6 +935,19 @@ class RequestsTestCase(unittest.TestCase):
 
         assert 'multipart/form-data' in p.headers['Content-Type']
 
+    def test_can_send_bytes_bytearray_objects_with_files(self):
+        # Test bytes:
+        data = {'a': 'this is a string'}
+        files = {'b': b'foo'}
+        r = requests.Request('POST', httpbin('post'), data=data, files=files)
+        p = r.prepare()
+        assert 'multipart/form-data' in p.headers['Content-Type']
+        # Test bytearrays:
+        files = {'b': bytearray(b'foo')}
+        r = requests.Request('POST', httpbin('post'), data=data, files=files)
+        p = r.prepare()
+        assert 'multipart/form-data' in p.headers['Content-Type']
+
     def test_can_send_file_object_with_non_string_filename(self):
         f = io.BytesIO()
         f.name = 2
@@ -1038,6 +1051,23 @@ class RequestsTestCase(unittest.TestCase):
         assert r.status_code == 200
         assert 'application/json' in r.request.headers['Content-Type']
         assert {'life': 42} == r.json()['json']
+
+    def test_response_iter_lines(self):
+        r = requests.get(httpbin('stream/4'), stream=True)
+        assert r.status_code == 200
+
+        it = r.iter_lines()
+        next(it)
+        assert len(list(it)) == 3
+
+    @pytest.mark.xfail
+    def test_response_iter_lines_reentrant(self):
+        """Response.iter_lines() is not reentrant safe"""
+        r = requests.get(httpbin('stream/4'), stream=True)
+        assert r.status_code == 200
+
+        next(r.iter_lines())
+        assert len(list(r.iter_lines())) == 3
 
 
 class TestContentEncodingDetection(unittest.TestCase):
@@ -1583,7 +1613,6 @@ def test_prepare_unicode_url():
     p.prepare(
         method='GET',
         url=u('http://www.example.com/üniçø∂é'),
-        hooks=[]
     )
     assert_copy(p, p.copy())
 
@@ -1597,6 +1626,13 @@ def test_urllib3_retries():
 
     with pytest.raises(RetryError):
         s.get(httpbin('status/500'))
+
+def test_vendor_aliases():
+    from requests.packages import urllib3
+    from requests.packages import chardet
+
+    with pytest.raises(ImportError):
+        from requests.packages import webbrowser
 
 if __name__ == '__main__':
     unittest.main()
