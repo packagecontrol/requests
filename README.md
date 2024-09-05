@@ -28,7 +28,7 @@ with the following contents:
 ```js
 // For Python 3.3
 {
-	"$schema": "sublime://packagecontrol.io/schemas/dependencies",
+   "$schema": "sublime://packagecontrol.io/schemas/dependencies",
 
    "*": {
       "*": [
