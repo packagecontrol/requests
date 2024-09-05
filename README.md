@@ -5,7 +5,10 @@
 This is the *[requests][]* module
 bundled for usage with [Package Control][],
 a package manager
-for the [Sublime Text][] text editor.
+for the [Sublime Text][] text editor
+and it's Python 3.3 plugin host.
+For the 3.8 host,
+the whl archives are directly fetched from pypi.
 
 
 this repo | pypi
@@ -23,12 +26,28 @@ in your package root
 with the following contents:
 
 ```js
+// For Python 3.3
 {
+	"$schema": "sublime://packagecontrol.io/schemas/dependencies",
+
    "*": {
       "*": [
          "requests"
       ]
    }
+}
+// For Python 3.8 & ST4
+{
+	"$schema": "sublime://packagecontrol.io/schemas/dependencies",
+
+	"*": {
+		"*": [
+			"requests",
+			"charset-normalizer",
+			"idna",
+			"urllib3"
+		]
+	}
 }
 ```
 
@@ -50,18 +69,10 @@ See also:
 
 ## How to update this repository (for contributors)
 
-1. Download the latest tarball
-   from [pypi][].
-2. Delete everything inside the `all/` folder.
-3. Copy the `requests/` folder
-   and everything related to copyright/licensing
-   from the tarball
-   to the `all/` folder.
-4. Commit changes
-   and either create a pull request
-   or create a tag directly
-   in the format `v<version>`
-   (in case you have push access).
+Don't. 
+We're already mirroring the latest 3.3-compatible version
+and for the 3.8 host,
+the packages are directly fetched from pypi.
 
 
 ## License
