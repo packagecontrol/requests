@@ -6,9 +6,9 @@ This is the *[requests][]* module
 bundled for usage with [Package Control][],
 a package manager
 for the [Sublime Text][] text editor
-and it's Python 3.3 plugin host.
+and its Python 3.3 plugin host.
 For the 3.8 host,
-the whl archives are directly fetched from pypi.
+the .whl archives are directly fetched from pypi.
 
 
 this repo | pypi
@@ -38,16 +38,16 @@ with the following contents:
 }
 // For Python 3.8 & ST4
 {
-	"$schema": "sublime://packagecontrol.io/schemas/dependencies",
+    "$schema": "sublime://packagecontrol.io/schemas/dependencies",
 
-	"*": {
-		"*": [
-			"requests",
-			"charset-normalizer",
-			"idna",
-			"urllib3"
-		]
-	}
+    "*": {
+        "*": [
+            "requests",
+            "charset-normalizer",
+            "idna",
+            "urllib3"
+        ]
+    }
 }
 ```
 
@@ -72,7 +72,7 @@ See also:
 Don't. 
 We're already mirroring the latest 3.3-compatible version
 and for the 3.8 host,
-the packages are directly fetched from pypi.
+the package is directly fetched from pypi.
 
 
 ## License
